@@ -1,0 +1,43 @@
+.login {
+    background-image: url('../../public/images/loginBg.jpg');
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.card {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 312;
+    padding: 16px;
+}
+
+.center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.header {
+    margin-bottom: 38px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #1976d2;
+}
+
+.checkbox {
+    position: relative;
+    left: 4px;
+    opacity: 0.8 !important;
+}
+
+.css-ahj2mt-MuiTypography-root {
+    opacity: 0.8;
+}
