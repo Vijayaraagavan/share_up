@@ -8,3 +8,9 @@ export default function () {
         </div>
     )
 }
+
+export const getServerSideProps = async({req}) => {
+    return {
+        props: {}
+    }
+}

@@ -16,7 +16,8 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
 import CardHeader from '@mui/material/CardHeader';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
 
 export default function () {
     const action = {
@@ -74,7 +75,26 @@ export default function () {
             username: user,
             password: pin
         }
-        console.log(payload)
+        const url = "http://localhost:3000/api/login";
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify(payload),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data)
+                if (data.status == 200) {
+                    pushRoute();
+                }
+            }).catch((fail) => console.log('fialed ', fail))
+    }
+    const router = useRouter();
+
+    const pushRoute = () => {
+        router.push("/home");
     }
 
     const rules = () => {
@@ -89,22 +109,22 @@ export default function () {
 
     return (
         <>
-        <Head>
-            <title>Login</title>
-            {/* <link rel="icon" href='/images/logo.jpg' /> */}
-        </Head>
-        <div className={styles.login}>
-            <Card className={styles.card} raised>
-                {/* <div className={styles.header}> */}
+            <Head>
+                <title>Login</title>
+                {/* <link rel="icon" href='/images/logo.jpg' /> */}
+            </Head>
+            <div className={styles.login}>
+                <Card className={styles.card} raised>
+                    {/* <div className={styles.header}> */}
                     <CardHeader sx={{ marginBottom: 1, pl: 0.9, color: '#1976d2' }} title="Sign In" />
-                {/* </div> */}
-                <div style={{ display: 'flex', flexWrap: 'nowrap', marginBottom: 16 }}>
-                    <AccountCircle sx={{ color: action.active, mr: 1, mt: 2, fontSize: 28 }} color='primary' />
-                    <TextField label="Username" error={userError.error} helperText={userError.text} value={user} onChange={handleUser} variant="outlined" color="success" required fullWidth autoComplete='off' />
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'nowrap' }}>
-                    <Lock sx={{ color: action.active, mr: 1, mt: 2, fontSize: 28 }} color='primary' />
-                    {/* <TextField label="Password" error={pinError.error} helperText={pinError.text} variant="outlined" color="success" fullWidth type="text" value={pin} onChange={handlePin} required endadornment={
+                    {/* </div> */}
+                    <div style={{ display: 'flex', flexWrap: 'nowrap', marginBottom: 16 }}>
+                        <AccountCircle sx={{ color: action.active, mr: 1, mt: 2, fontSize: 28 }} color='primary' />
+                        <TextField label="Username" error={userError.error} helperText={userError.text} value={user} onChange={handleUser} variant="outlined" color="success" required fullWidth autoComplete='off' />
+                    </div>
+                    <div style={{ display: 'flex', flexWrap: 'nowrap' }}>
+                        <Lock sx={{ color: action.active, mr: 1, mt: 2, fontSize: 28 }} color='primary' />
+                        {/* <TextField label="Password" error={pinError.error} helperText={pinError.text} variant="outlined" color="success" fullWidth type="text" value={pin} onChange={handlePin} required endadornment={
                         <InputAdornment position="end">
                             <IconButton
                                 aria-label="toggle password visibility"
@@ -115,34 +135,34 @@ export default function () {
                             </IconButton>
                         </InputAdornment>
                     } /> */}
-                    <FormControl sx={{ m: 0, mb: 1 }} variant="outlined" fullWidth >
-                        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                        <OutlinedInput
-                            id="outlined-adornment-password"
-                            type={showPass ? 'text' : 'password'}
-                            error={pinError.error}
-                            value={pin} onChange={handlePin}
-                            required
-                            color='success'
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-                                        edge="end"
-                                    >
-                                        {!showPass ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                            label="Password"
-                        />
-                    </FormControl>
-                </div>
-                <FormControlLabel className={styles.checkbox} control={<Checkbox checked={checked} onChange={() => setChecked(!checked)} />} label="I am bitch" />
-                <Button variant='contained' disabled={rules()} fullWidth style={{ marginTop: 24 }} onClick={handleSubmit}>Login</Button>
-            </Card>
-        </div>
+                        <FormControl sx={{ m: 0, mb: 1 }} variant="outlined" fullWidth >
+                            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                            <OutlinedInput
+                                id="outlined-adornment-password"
+                                type={showPass ? 'text' : 'password'}
+                                error={pinError.error}
+                                value={pin} onChange={handlePin}
+                                required
+                                color='success'
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            edge="end"
+                                        >
+                                            {!showPass ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                                label="Password"
+                            />
+                        </FormControl>
+                    </div>
+                    <FormControlLabel className={styles.checkbox} control={<Checkbox checked={checked} onChange={() => setChecked(!checked)} />} label="I am bitch" />
+                    <Button variant='contained' disabled={rules()} fullWidth style={{ marginTop: 24 }} onClick={handleSubmit}>Login</Button>
+                </Card>
+            </div>
         </>
     )
 }

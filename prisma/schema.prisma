@@ -14,3 +14,23 @@ model company {
   address String? @db.Char(50)
   salary  Float?  @db.Real
 }
+
+model User {
+  id Int @id @default(autoincrement())
+  email String
+  name String
+  password_hash String
+  profile Profile?
+}
+
+model Profile {
+  id Int @id @default(autoincrement())
+  name String
+  phoneNo String
+  age Int
+  dob String
+  locality String
+  active Boolean @default(false)
+  userId Int @unique
+  user User @relation(fields: [userId], references: [id])
+}
