@@ -17,12 +17,15 @@ import Button from '@mui/material/Button';
 import CardHeader from '@mui/material/CardHeader';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { selectHomeState, setSnackbar } from '../../store/index'
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 export default function () {
     const action = {
         active: 'success'
     }
+    const dispatch = useDispatch();
     const [user, setUser] = useState('');
     const [userError, setUserError] = useState({ error: false, text: '' });
     const [pin, setPin] = useState('');
@@ -88,8 +91,12 @@ export default function () {
                 console.log(data)
                 if (data.status == 200) {
                     pushRoute();
+                    openSnack("Logged In Successfully", "success")
+                } else {
+                    openSnack("Invalid Credentials", "error")
+                    console.log('fialed ', fail)
                 }
-            }).catch((fail) => console.log('fialed ', fail))
+            }).catch((fail) => { })
     }
     const router = useRouter();
 
@@ -106,6 +113,13 @@ export default function () {
     }
 
     const handleClickShowPassword = (e) => setShowPass(!showPass)
+
+    const openSnack = (message, type) => {
+        dispatch(setSnackbar({
+            message: message,
+            type: type
+        }))
+    }
 
     return (
         <>
