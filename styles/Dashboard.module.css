@@ -1,0 +1,36 @@
+.setting_icon {
+    width: 100px;
+    height: 100px;
+  /* background-color: red; */
+    animation-name: settings_icon_in ;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+  }
+  
+  .setting_icon_out {
+    height: 100px;
+    animation-name: settings_icon_out ;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes settings_icon_in {
+    /* from {
+        background-color: red;
+        transform: rotate(0deg);
+    } */
+    to {
+        /* background-color: green; */
+        transform: rotate(-90deg);
+    }
+  }
+  @keyframes settings_icon_out {
+    /* from {
+        background-color: red;
+        transform: rotate(0deg);
+    } */
+    to {
+        /* background-color: green; */
+        transform: rotate(90deg);
+    }
+  }

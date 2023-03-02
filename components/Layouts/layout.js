@@ -1,9 +1,21 @@
-import { Slide, Snackbar, Alert } from "@mui/material"
+import { Slide, Snackbar, Alert, useMediaQuery } from "@mui/material"
 import { useSelector, useDispatch } from "react-redux";
 import { selectHomeState, close } from "../../store/index";
+import { useState } from "react";
+import BottomNav from "./bottomNav";
 
 export default function Layout({ children }) {
     const snackProps = useSelector(selectHomeState);
+    const mobile = useMediaQuery('(max-width: 500px)');
+
+    const getNav = () => {
+        if (mobile) {
+            return <BottomNav index={btmIndex} setPage={setPage} />
+        } else {
+            return ''
+        }
+    }
+
     const handleClose = () => {
         // console.log(snack.current);
         dispatch(close());
@@ -15,6 +27,13 @@ export default function Layout({ children }) {
     const transit = (props) => {
         return <Slide {...props} direction="down"></Slide>
     }
+    const btmIndex = [
+        { label: "Recents", icon: "Restore", page: "transaction" },
+        { label: "Favorites", icon: "Favorite", page: "transaction" },
+        { label: "Nearby", icon: "LocationOn", page: "transaction" }
+    ]
+    const [tab, setTab] = useState(0);
+    const setPage = (value) => setTab(value);
     return (
         <>
             <Snackbar
@@ -30,6 +49,7 @@ export default function Layout({ children }) {
                 </Alert>
             </Snackbar>
             <main>{children}</main>
+            {getNav()}
         </>
     )
 }
