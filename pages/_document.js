@@ -4,13 +4,14 @@ export default function Document() {
     return (
         <Html>
             <Head>
-                <link rel="icon" href="images/logo.jpg" type='image/icon'/>
+                <link rel="icon" href="images/logo.jpg" type='image/icon' />
                 <meta name="description"
                     content="A web app to maintain accounts between group of people" />
                 <meta http-equiv="Content-Type"
                     content="text/html;charset=UTF-8" />
                 <meta name="author"
                     content="Vijayaraagavan" />
+                {/* <meta name="viewport" content="initial-scale=1, width=device-width" /> */}
                 <meta name="keywords"
                     content="shareUp, settleUp, settle_up, transaction" />
                 <link rel="shortcut icon"

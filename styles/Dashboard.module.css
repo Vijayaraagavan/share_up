@@ -9,6 +9,7 @@
   
   .setting_icon_out {
     height: 100px;
+    color: 'black';
     animation-name: settings_icon_out ;
     animation-duration: 1s;
     animation-fill-mode: forwards;
@@ -33,4 +34,8 @@
         /* background-color: green; */
         transform: rotate(90deg);
     }
+  }
+
+  .check {
+    font-family: var(--montserrat);
   }

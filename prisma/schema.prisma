@@ -16,21 +16,52 @@ model company {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  email String
-  name String
+  id            Int             @id @default(autoincrement())
+  email         String
+  name          String
   password_hash String
-  profile Profile?
+  profile       Profile?
+  groups        UsersOnGroups[]
 }
 
 model Profile {
-  id Int @id @default(autoincrement())
-  name String
-  phoneNo String
-  age Int
-  dob String
+  id       Int     @id @default(autoincrement())
+  name     String
+  phoneNo  String
+  age      Int
+  dob      String
   locality String
-  active Boolean @default(false)
-  userId Int @unique
-  user User @relation(fields: [userId], references: [id])
+  active   Boolean @default(false)
+  expense  Float   @default(0)
+  userId   Int     @unique
+  user     User    @relation(fields: [userId], references: [id])
+}
+
+model Group {
+  id        Int             @id @default(autoincrement())
+  name      String
+  uid       String
+  members   Int[]
+  admin     Int
+  requests  Int[]
+  GroupInfo GroupInfo?
+  Users     UsersOnGroups[]
+}
+
+model UsersOnGroups {
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int
+  group      Group    @relation(fields: [groupId], references: [id])
+  groupId    Int
+  assignedAt DateTime @default(now())
+
+  @@id([userId, groupId])
+}
+
+model GroupInfo {
+  id           Int    @id @default(autoincrement())
+  name         String
+  totalExpense Float
+  groupId      Int    @unique
+  group        Group  @relation(fields: [groupId], references: [id])
 }
