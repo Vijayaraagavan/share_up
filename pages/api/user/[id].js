@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 export default function handle(req, resp) {
-    const {id} = req.query;
+    const { id } = req.query;
     if (req.method != 'GET') {
-        resp.status(404).json({error: "invalid route"})
+        resp.status(404).json({ error: "invalid route" })
         return
     }
     const userId = parseInt(id);
@@ -24,11 +24,19 @@ export default function handle(req, resp) {
             },
             groups: {
                 include: {
-                    group: true
+                    group: {
+                        include: {
+                            Users: {
+                                include: {
+                                    user: true
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
     }).then(res => {
-        resp.status(200).json({message: "done", user: res})
+        resp.status(200).json({ message: "done", user: res })
     })
 }
